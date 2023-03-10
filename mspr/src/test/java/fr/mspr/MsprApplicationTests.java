@@ -1,10 +1,10 @@
-package fr.acme.CRM_ACME;
+package fr.mspr;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CrmAcmeApplicationTests {
+class MsprApplicationTests {
 
 	@Test
 	void contextLoads() {

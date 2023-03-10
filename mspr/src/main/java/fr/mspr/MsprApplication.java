@@ -1,13 +1,16 @@
-package fr.acme.CRM_ACME;
+package fr.mspr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Component;
+
 
 @SpringBootApplication
-public class CrmAcmeApplication {
+public class MsprApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CrmAcmeApplication.class, args);
+		SpringApplication.run(MsprApplication.class, args);
+		System.out.println("toto");
 	}
 
 }
