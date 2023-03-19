@@ -1,5 +1,0 @@
-package fr.mspr.services;
-
-public class ClientServiceImpl {
-
-}
