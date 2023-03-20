@@ -12,11 +12,12 @@ public class MsprApplication implements CommandLineRunner {
 		System.out.println("\n************************");
 		System.out.println("Compilation projet => OK");
 		System.out.println("************************\n");
+		
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
 		
-		
+
 	}
 }

@@ -3,9 +3,9 @@ package fr.mspr.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 @Table(name="client")
 public class Client {
 	@Id
-	@Column(name="id_client")
+	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idClient;
 	
@@ -47,12 +47,9 @@ public class Client {
 	@Column(name="telephone", nullable=false, length=20)
 	private String telephone;
 	
-	@OneToMany(
-		mappedBy="client",
-		orphanRemoval = true, 
-		fetch = FetchType.EAGER
-	)
-	private List<LigneDeCommande> listeCommandes = new ArrayList<>();
+	@Column(name="commande")
+	@OneToMany(cascade=CascadeType.ALL)
+	private List<Commande> commandes = new ArrayList<>();
 	
 	// ============ Constructeurs =================
 
@@ -79,12 +76,12 @@ public class Client {
 		return idClient;
 	}
 	
-	public List<LigneDeCommande> getListeCommandes() {
-		return listeCommandes;
+	public List<Commande> getCommandes() {
+		return commandes;
 	}
 
-	public void setListeCommandes(List<LigneDeCommande> listCommandes) {
-		this.listeCommandes = listCommandes;
+	public void setCommandes(List<Commande> commandes) {
+		this.commandes = commandes;
 	}
 
 	public void setIdClient(int idClient) {
@@ -165,11 +162,11 @@ public class Client {
 	
 	// ============= Helpers Methods =================
 	
-	public void addLigneCommande(LigneDeCommande ldc) {
-		listeCommandes.add(ldc);
+	public void addLigneCommande(Commande ldc) {
+		commandes.add(ldc);
 	}
 	
-	public void removeLigneCommande(LigneDeCommande ldc) {
-		listeCommandes.remove(ldc);
+	public void removeCommande(Commande ldc) {
+		commandes.remove(ldc);
 	}
 }

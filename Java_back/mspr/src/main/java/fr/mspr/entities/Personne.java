@@ -11,7 +11,7 @@ import jakarta.persistence.Id;
 @Entity(name="personne")
 public class Personne {
 	@Id
-	@Column(name="id_personne")
+	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idPersonne;
 	

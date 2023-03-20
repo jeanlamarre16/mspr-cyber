@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 @Entity
 public class Employe {
 	@Id
-	@Column(name="id_employe")
+	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idEmploye;
 	

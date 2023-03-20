@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 @Table(name="produit")
 public class Produit {
 	@Id
-	@Column(name="id_produit")
+	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idProduit;
 	
@@ -48,15 +48,12 @@ public class Produit {
 	
 	@Column(name="origine", nullable=false, length=32)
 	private String origine;
-	
+
+	@Column(name="produit")
 	@ManyToMany(mappedBy = "produits")
-	private List<LigneDeCommande> ligneDeCommande = new ArrayList<>();
-
+	private List<Commande> commandes = new ArrayList<>();
+	
 	// ========= Constructeur ===========
-
-	public void setLigneDeCommande(List<LigneDeCommande> ligneDeCommande) {
-		this.ligneDeCommande = ligneDeCommande;
-	}
 
 	public Produit(int idProduit, String refProduit, String nomProduit, String categorieProduit, 
 			String marque, String couleur, String materiau, String url, float prix, int stock, String origine) {
@@ -82,7 +79,7 @@ public class Produit {
 		return couleur;
 	}
 	
-	public long getIdProduit() {
+	public Integer getIdProduit() {
 		return idProduit;
 	}
 
@@ -92,10 +89,6 @@ public class Produit {
 
 	public String getMateriau() {
 		return materiau;
-	}
-
-	public List<LigneDeCommande> getLigneDeCommande() {
-		return ligneDeCommande;
 	}
 	
 	public String getNomProduit() {
@@ -172,7 +165,7 @@ public class Produit {
 		this.origine = origine;
 	}
 	
-// =============== Methodes du processus métier ================
+	// =============== Methodes du processus métier ================
 	
 	public void renflouerStock(int qt) {
 		this.stock += qt;

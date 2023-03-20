@@ -1,25 +1,24 @@
 package fr.mspr.entities;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "commande")
 public class Commande {
 	@Id
-	@Column(name="id_commande")
+	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idCommande;
 	
@@ -27,30 +26,30 @@ public class Commande {
 	private String refCommande;
 	
 	@Column(name="date_commande", nullable=false)
-	private LocalDateTime dateCommande;
+	private LocalDate dateCommande;
 	
-	private boolean statut; // en cours - livré
+	@Column(name="statut", nullable=false)
+	private boolean statut; // en cours = true / livré = false
 
-	@ManyToOne
-	@JoinColumn(name="id_client", nullable=false)
+	@ManyToOne(optional = false)
 	private Client client;
 	
-	@OneToMany(
-		mappedBy="idCommande",
-		orphanRemoval = true, 
-		fetch = FetchType.EAGER
+	@Column(name="produit")
+	@ManyToMany(
+		fetch = FetchType.EAGER,
+		cascade = CascadeType.ALL
 	)
-	private List<LigneDeCommande> ligneDeCommandes = new ArrayList<>();
+	private List<Produit> produits;
 	
 	// ========== Constructeurs ============
 	
-	public Commande(int idCommande, String refCommande, LocalDateTime dateCommande, Client client, List<LigneDeCommande> ligneDeCommandes) {
+	public Commande(int idCommande, String refCommande, LocalDate dateCommande, Client client, List<Produit> produits) {
 		super();
 		this.idCommande = idCommande;
 		this.refCommande = refCommande;
 		this.client = client;
-		this.ligneDeCommandes = ligneDeCommandes;
-		this.dateCommande = dateCommande;
+		this.produits = produits;
+		this.dateCommande = LocalDate.now();
 	}
 
 	public Commande() {super();}
@@ -65,11 +64,11 @@ public class Commande {
 		this.client = client;
 	}
 
-	public LocalDateTime getDateCommande() {
+	public LocalDate getDateCommande() {
 		return dateCommande;
 	}
 
-	public void setDateCommande(LocalDateTime dateCommande) {
+	public void setDateCommande(LocalDate dateCommande) {
 		this.dateCommande = dateCommande;
 	}
 
@@ -77,12 +76,12 @@ public class Commande {
 		return statut;
 	}
 
-	public List<LigneDeCommande> getLigneDeCommandes() {
-		return ligneDeCommandes;
+	public List<Produit> getProduits() {
+		return produits;
 	}
 	
-	public void setLigneDeCommandes(List<LigneDeCommande> ligneDeCommandes) {
-		this.ligneDeCommandes = ligneDeCommandes;
+	public void setProduits(List<Produit> produits) {
+		this.produits = produits;
 	}
 	
 	public void setStatut(boolean statut) {
@@ -111,13 +110,12 @@ public class Commande {
 	
 	//============= Helpers Methods ===============
 	
-	public void addLigneDeCommande(LigneDeCommande ldc) {
-		ligneDeCommandes.add(ldc);
-		//ldc.getCommande().ligneDeCommandes.add(this);	
+	public void addProduit(Produit prod) {
+		produits.add(prod);	
 	}
 	
-	public void removeLigneDeCommande(LigneDeCommande ldc) {
-		ligneDeCommandes.remove(ldc);
+	public void removeProduit(Produit prod) {
+		produits.remove(prod);
 	}
 }
 
